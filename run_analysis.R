@@ -7,10 +7,10 @@ if(!file.exists("./dataset")){
   dir.create("./dataset")
 }
 
-#downloads the file
+#downloading the file
 fileUrl1 = "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(fileUrl1,destfile="./dataset/dataset.zip", method="curl")
-#unzips the downloaded file in the (new) data directory
+#unziping the downloaded file 
 unzip("./dataset/dataset.zip", exdir="./dataset")
 file.remove("./dataset/dataset.zip")
 
@@ -43,7 +43,7 @@ columns <- grepl("mean|std|Subject|Activity", colnames(df)) & !grepl("meanFreq",
 # New data frame with subset of columns
 newdf <- df[, columns]
 
-# Transform activities from numerric to names
+# Transform activities from numeric to names
 activity_names <- read.table("./dataset/UCI HAR Dataset/activity_labels.txt", stringsAsFactors = FALSE)
 colnames(activity_names) <- c("Activity", "ActivityDescription")
 
@@ -51,7 +51,7 @@ colnames(activity_names) <- c("Activity", "ActivityDescription")
 newdf <- tbl_df(newdf)
 mergedDF <- merge(activity_names,newdf, by_x="Activity", by.y = "Activity", all = TRUE)
 
-# Set names and rename some of them
+# Rename some names 
 dfnames <- names(mergedDF)
 dfnames <- str_replace_all(dfnames, "Acc", "-acceleration-")
 # Change Gyro to gyroscope
@@ -72,7 +72,7 @@ names(mergedDF) <- dfnames
 
 # Gather measurements according to tidy data principles
 dftidy <- mergedDF %>% gather(sensor, Value, 4:69)
-# Summarise data by sensor, activitydescription and subject
+# Summarise data by sensor, activity and subject
 dftidy <- dftidy %>% group_by(sensor, activity, subject )%>% summarise(mean = mean(Value))
 
 # Write data to external text file
