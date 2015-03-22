@@ -1,5 +1,5 @@
 library(dplyr)
-#library(stringr)
+library(stringr)
 library(tidyr)
 
 if(!file.exists("./dataset")){
@@ -14,6 +14,7 @@ download.file(fileUrl1,destfile="./dataset/dataset.zip", method="curl")
 unzip("./dataset/dataset.zip", exdir="./dataset")
 file.remove("./dataset/dataset.zip")
 
+# Read features and training data set
 features <- read.table("./dataset/UCI HAR Dataset/features.txt", stringsAsFactors = FALSE)
 
 X_train <- read.table("./dataset/UCI HAR Dataset/train/X_train.txt")
@@ -24,6 +25,7 @@ colnames(y_train) <- "Activity"
 colnames(subject_train) <- "Subject"
 train <- cbind(subject_train, y_train, X_train)
 
+# Read testing data set
 X_test <- read.table("./dataset/UCI HAR Dataset/test/X_test.txt")
 y_test <- read.table("./dataset/UCI HAR Dataset/test/y_test.txt")
 subject_test <- read.table("./dataset/UCI HAR Dataset/test/subject_test.txt")
@@ -32,18 +34,24 @@ colnames(y_test) <- "Activity"
 colnames(subject_test) <- "Subject"
 test <- cbind(subject_test, y_test, X_test)
 
+# Rows binding training and testing data sets
 df <- rbind(train, test)
 
+# Selecting columns
 columns <- grepl("mean|std|Subject|Activity", colnames(df)) & !grepl("meanFreq", colnames(df))
 
+# New data frame with subset of columns
 newdf <- df[, columns]
 
+# Transform activities from numerric to names
 activity_names <- read.table("./dataset/UCI HAR Dataset/activity_labels.txt", stringsAsFactors = FALSE)
 colnames(activity_names) <- c("Activity", "ActivityDescription")
 
-##newdf <- tbl_df(newdf)
+# Merging activity names with main data set
+newdf <- tbl_df(newdf)
 mergedDF <- merge(activity_names,newdf, by_x="Activity", by.y = "Activity", all = TRUE)
 
+# Set names and rename some of them
 dfnames <- names(mergedDF)
 dfnames <- str_replace_all(dfnames, "Acc", "-acceleration-")
 # Change Gyro to gyroscope
@@ -62,11 +70,16 @@ dfnames <- str_replace_all(dfnames, "--", "-")
 dfnames <- tolower(dfnames)
 names(mergedDF) <- dfnames
 
-ttidy <- mergedDF %>% gather(sensor, Value, 4:69, -activitydescription)
-#ttidy1 <- ttidy %>% group_by(subject, activitydescription, sensor)%>% summarize(mean = mean(Value))
-ttidy1 <- ttidy %>% group_by(sensor, activitydescription, subject )%>% summarize(mean = mean(Value))
+# Gather measurements according to tidy data principles
+dftidy <- mergedDF %>% gather(sensor, Value, 4:69)
+# Summarise data by sensor, activitydescription and subject
+dftidy <- dftidy %>% group_by(sensor, activity, subject )%>% summarise(mean = mean(Value))
 
+# Write data to external text file
+write.table(dftidy, "smartphone_sensor_data.txt", row.names = FALSE,)
 
-#write.table(ttidy1, "tidy_data.txt", row.names = FALSE)
-write.table(ttidy1, "tidy_data.txt")
+# Test loading data
+#t <- read.table("smartphone_sensor_data.txt", header = TRUE)
+#View(t)
+
 
