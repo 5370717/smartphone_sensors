@@ -5,18 +5,18 @@ sensor    32
   
 activity  1   
   Type of activity   
-  * 1 .WALKING
-	* 2	.WALKING_UPSTAIRS
-	* 3	.WALKING_DOWNSTAIRS
-	* 4	.SITTING
-	* 5	.STANDING
-	* 6	.LAYING
+  *  1 .WALKING
+  *  2	.WALKING_UPSTAIRS
+	*  3	.WALKING_DOWNSTAIRS
+	*  4	.SITTING
+	*  5	.STANDING
+	*  6	.LAYING    
 
 subject 2   
-  * 1..30 .Number in the list of participants of the experiment   
+  *  1..30 .Number in the list of participants of the experiment   
   
 mean  20   
-  * The value returned by the sensor
+  *  The value returned by the sensor
 
 
 
