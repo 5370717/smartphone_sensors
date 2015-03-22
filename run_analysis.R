@@ -1,15 +1,17 @@
+# Used some ideas from https://github.com/JorisSchut/Data-Science/blob/master/Other%20stuff/test.R
+
 library(dplyr)
 library(stringr)
 library(tidyr)
 
 if(!file.exists("./dataset")){
-  #Creates a new folder called "data" if you do not have one already.
+  #Creates a new folder.
   dir.create("./dataset")
 }
 
 #downloading the file
 fileUrl1 = "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl1,destfile="./dataset/dataset.zip", method="curl")
+download.file(fileUrl1, destfile="./dataset/dataset.zip", method="curl")
 #unziping the downloaded file 
 unzip("./dataset/dataset.zip", exdir="./dataset")
 file.remove("./dataset/dataset.zip")
