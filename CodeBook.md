@@ -19,14 +19,15 @@
 **mean  20**   
   *  The value returned by the sensor
   
-## Dimensions
-Dimension of this data set is 11880 rows and 4 columns
-
-## Class
+### Class
   *  Class of sensor is factor
   *  Class of activity is integer
   *  Class of subject is integer
   *  Class of mean is numeric
+  
+## Dimensions
+Dimension of this data set is 11880 rows and 4 columns
+
   
 ## Guide to create this data file
   *  Algorithm is expained in README.md file
