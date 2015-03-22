@@ -1,5 +1,8 @@
 # CodeBook for smartphone_sensor_data.txt
 
+## Project Description
+Getting and Cleaning Data Course Project 
+
 ## Columns 
 **sensor    32**    
   *  The name of sensor signals (accelerometer and gyroscope)  

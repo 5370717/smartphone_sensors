@@ -1,7 +1,7 @@
 # smartphone_sensors
 **Getting and Cleaning Data Course Project**
 
-### Explanation of the file smartphone_sensor_data.txt
+### Explanation of the data set
 
 This data set was obtained by processing raw data set of smartphone sensors.
 Initial set contained herein https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.   
